@@ -1,0 +1,20 @@
+{
+    "name" : "Compras Estatales MAL!!",
+    "version" : "1.0",
+    "author" : "Datamatic",
+    "website" : "www.datamatic.com.uy",
+    "category" : "MRREE",
+    "description": "MRREE",
+	'depends' : ["account", "stock",],
+    "init_xml" : [],
+    "demo_xml" : [],
+    "update_xml" : [
+        				'menu.xml',
+        				'solicitud_recursos/solicitud_recursos_view.xml',
+        				'solicitud_recursos/solicitud_recursos_workflow.xml',
+        				'pedido_compra/pedido_compra_view.xml',
+        				'pedido_compra/pedido_compra_workflow.xml',
+        			],
+    "installable": True,
+    "active": False,
+}

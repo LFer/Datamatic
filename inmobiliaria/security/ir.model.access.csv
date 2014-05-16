@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_estate_admininm,access_estate_admininm,model_estate,grp_group_wf_admininm,1,1,1,1
+access_estate_secretariainm,access_estate_secretariainm,model_estate,grp_group_wf_secretariainm,1,1,1,1
+access_estate_vendedorinm,access_estate_vendedorinm,model_estate,grp_group_wf_vendedorinm,1,1,1,1

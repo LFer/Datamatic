@@ -1,0 +1,15 @@
+
+
+Crear la administración de Discos
+
+El disco tiene los siguientes datos:
+
+Título (largo 64)
+Descripción (texto)
+Fecha de publicación (fecha)
+Formato: Vinilo, CD, MP3 (lista de selección)
+Activo (booleano) 
+
+Crear el menú superior Discos, un menú lateral Administración con un sub-menú Discos
+
+

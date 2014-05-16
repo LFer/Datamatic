@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+<data>
+    <record id="view_pedido_cotizacion_form" model="ir.ui.view">
+        <field name="name">cotizaciones.form</field>
+        <field name="model">cotizaciones</field>
+        <field eval="1" name="priority"/>
+        <field name="arch" type="xml">
+            <form string="Datos" version="7.0">
+                <header>
+					<button name="button_Enviar_a_recomendar" type="workflow" states="draft" string="Enviar a recomendar"/>
+					<button name="button_Recomendada" type="workflow" states="pending_recommend" string="Recomendada"/>
+					<button name="button_Adjudicada" type="workflow" states="recommend" string="Adjudicada"/>
+					<button name="button_Cerrada" type="workflow" states="pending_recommend" string="Cerrada"/>
+					<field name="state" widget="statusbar" statusbar_visible="draft,pending_recommend,recommend" statusbar_colors='{"cerrado":"blue"}'/>
+				</header>
+                <sheet>
+                    <group col="4" colspan="2">
+						<div>
+                            <label for="name" class="oe_inline"/>
+                            <h1>
+                                <field name="name"  readonly="1"/>
+                            </h1>
+                        </div>
+					</group>
+					<group col="4" colspan="2">
+                        <field name="company_id" style="width: 50%%"/>
+						<field name="buyer" style="width: 50%%"/>
+						<field name="supplier" style="width: 50%%"/>
+						<field name="currency" style="width: 50%%"/>
+						<field name="pdc" style="width: 50%%"/>
+						<field name="answer_date" style="width: 50%%"/>
+					</group>
+					<group col="4" colspan="2" style="margin-top: 40px">
+						<field name="delivery_date" style="width: 50%%"/>
+						<field name="op1" style="width: 50%%"/>
+                    </group>
+					<notebook>
+						<page string="Cotización">
+							<field name='pd_ids_solicitado' nolabel="1" widget='one2many_list' context="">
+								<tree string="Solicitado" editable="bottom">
+									<field name="product_id" on_change="onchange_product_id(product_id,product_uom_id)"/>
+									<field name="descripcion" />
+									<field name="product_requested_qty" />
+									<field name="product_uom_id" />
+									<field name="precio" />
+								</tree>
+							</field>
+						</page>
+						<page string="Términos y condiciones">
+							<group>
+								<field name="plazo_pago" style="width: 30%%"/>
+								<field name="terminos_condiciones"/>
+							</group>
+						</page>
+						<page string="Información Adicional">
+							<group col="4" colspan="2">
+								<field name="cant_min" style="width: 50%%"/>
+								<field name="cant_max" style="width: 50%%"/>
+								<field name="nota_proveedor" style="width: 50%%"/>
+							</group>
+						</page>
+					</notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+<!-- Vista Tree -->
+    <record id="view_pedido_cotizacion_tree" model="ir.ui.view">
+        <field name="name">nuevo.tree</field>
+        <field name="model">cotizaciones</field>
+        <field eval="1" name="priority"/>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="datos">
+                <field name="company_id"/>
+				<field name="buyer"/>
+				<field name="supplier"/>
+				<field name="currency"/>
+				<field name="pdc"/>
+				<field name="answer_date"/>
+            </tree>
+        </field>
+    </record>
+<!-- Vista Busqueda -->
+    <record id="view_pedido_cotizacion_filter" model="ir.ui.view">
+        <field name="name">new.select</field>
+        <field name="model">cotizaciones</field>
+        <field name="arch" type="xml">
+            <search string="Search Datos">
+                <field name="name" filter_domain="[('name','ilike',self)]"/>
+            </search>
+        </field>
+    </record>
+<!-- Vista Formulario -->
+    <record id="action_pedido_cotizacion_form" model="ir.actions.act_window">
+        <field name="name">Cotización</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">cotizaciones</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+<!-- Vista Formulario -->
+    <menuitem id="menu_scot" parent="grp_solicitud_de_recursos.menu_ce" name="Cotizaciones" sequence="4"/>
+    <menuitem id="menu_scot_1" parent="menu_scot" name="Cotizaciones" action="action_pedido_cotizacion_form"/>
+</data>
+</openerp>

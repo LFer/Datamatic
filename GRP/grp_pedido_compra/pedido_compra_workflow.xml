@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+<data>
+    <record model="workflow" id="wkf_pedido_compra">
+        <field name="name">pedidos.compra</field>
+        <field name="osv">pedidos.compra</field>
+        <field name="on_create">True</field>
+    </record>
+<!-- ************************** activity *****************-->
+    <record model="workflow.activity" id="activ_Nuevo" >
+        <field name="wkf_id" ref="wkf_pedido_compra"/>
+        <field name="name">actividad_Nuevo</field>
+        <field name="flow_start">True</field>
+    </record>
+    <record model="workflow.activity" id="activ_Pendiente_de_aprobacion" >
+        <field name="wkf_id" ref="wkf_pedido_compra"/>
+        <field name="name">actividad_Pendiente_de_aprobacion</field>
+        <field name="kind">function</field>
+        <field name="action">action_Pendiente_de_aprobacion()</field>
+    </record>
+    <record model="workflow.activity" id="activ_Aprobado" >
+        <field name="wkf_id" ref="wkf_pedido_compra"/>
+        <field name="name">actividad_Aprobado</field>
+        <field name="kind">function</field>
+        <field name="action">action_Aprobado()</field>
+    </record>
+    <record model="workflow.activity" id="activ_Rechazado" >
+        <field name="wkf_id" ref="wkf_pedido_compra"/>
+        <field name="name">actividad_Rechazado</field>
+        <field name="flow_stop">True</field>
+        <field name="kind">function</field>
+        <field name="action">action_Rechazado()</field>
+    </record>
+    <record model="workflow.activity" id="activ_Afectado" >
+        <field name="wkf_id" ref="wkf_pedido_compra"/>
+        <field name="name">actividad_Afectado</field>
+        <field name="kind">function</field>
+        <field name="action">action_Afectado()</field>
+    </record>
+    <record model="workflow.activity" id="activ_Proveedores_invitados" >
+        <field name="wkf_id" ref="wkf_pedido_compra"/>
+        <field name="name">actividad_Proveedores_invitados</field>
+        <field name="kind">function</field>
+        <field name="action">action_Proveedores_invitados()</field>
+    </record>
+    <record model="workflow.activity" id="activ_Recepcion_de_ofertas" >
+        <field name="wkf_id" ref="wkf_pedido_compra"/>
+        <field name="name">actividad_Recepcion_de_ofertas</field>
+        <field name="flow_stop">True</field>
+        <field name="kind">function</field>
+        <field name="action">action_Recepcion_de_ofertas()</field>
+    </record>
+	<!--<record model="workflow.activity" id="activ_Solicitar_Aprobacion" >
+		<field name="wkf_id" ref="wkf_pedido_compra"/>
+		<field name="name">actividad_Solicitar_Aprobacion</field>
+		<field name="kind">function</field>
+		<field name="action">action_Solicitar_Aprobacion()</field>
+	</record> -->
+    
+<!-- ************************** transition *****************-->
+
+    <record model="workflow.transition" id="trans_CP_1">
+        <field name="act_from" ref="activ_Nuevo"/>
+        <field name="act_to" ref="activ_Pendiente_de_aprobacion"/>
+        <field name="signal">button_Solicitar_aprobacion</field>
+        <field name="condition">True</field>
+    </record>
+    <record model="workflow.transition" id="trans_CP_2">
+        <field name="act_from" ref="activ_Pendiente_de_aprobacion"/>
+        <field name="act_to" ref="activ_Aprobado"/>
+        <field name="signal">button_Aprobar</field>
+        <field name="condition">True</field>
+    </record>
+    <record model="workflow.transition" id="trans_CP_3">
+        <field name="act_from" ref="activ_Pendiente_de_aprobacion"/>
+        <field name="act_to" ref="activ_Rechazado"/>
+        <field name="signal">button_Rechazar</field>
+        <field name="condition">True</field>
+    </record>
+    <record model="workflow.transition" id="trans_CP_4">
+        <field name="act_from" ref="activ_Aprobado"/>
+        <field name="act_to" ref="activ_Afectado"/>
+        <field name="signal">button_Afectar</field>
+        <field name="condition">True</field>
+    </record>
+    <record model="workflow.transition" id="trans_CP_5">
+        <field name="act_from" ref="activ_Afectado"/>
+        <field name="act_to" ref="activ_Proveedores_invitados"/>
+        <field name="signal">button_Invitar_a_proveedores</field>
+        <field name="condition">True</field>
+    </record>
+    <record model="workflow.transition" id="trans_CP_6">
+        <field name="act_from" ref="activ_Proveedores_invitados"/>
+        <field name="act_to" ref="activ_Recepcion_de_ofertas"/>
+        <field name="signal">button_Recepcion_de_ofertas</field>
+        <field name="condition">True</field>
+    </record>
+</data>
+</openerp>

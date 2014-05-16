@@ -1,0 +1,26 @@
+﻿[[ repeatIn(objects,'o') ]]
+Código: [[ (o.number) or '' ]]
+
+
+
+Departamento: [[ (o.country_id.name) or '' ]]
+
+Ubicación: [[ (o.city) or '' ]] - [[ (o.state_id.name) or '' ]]
+
+Comodidades y distribución:
+
+[[ (o.comodidades) or '' ]]
+
+
+
+Valor de la propiedad: [[ (o.currency.symbol) or '' ]] [[ (o.price) or '' ]].-
+
+
+
+
+
+Comisión de intermediación: 3% (tres por ciento) más IVA 
+
+Nota: La información y valores fueron informados en su oportunidad por su propietario. Por consiguiente, los datos proporcionados en este material, pueden estar sujetas a modificaciones sin previo aviso. 
+
+

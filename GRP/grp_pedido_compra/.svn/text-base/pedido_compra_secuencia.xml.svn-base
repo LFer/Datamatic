@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+	<data noupdate="1">
+		<!-- Sequences for pedido.compras -->
+		<record id="seq_type_pedido_compra_number" model="ir.sequence.type">
+			<field name="name">Pedido de compras</field>
+			<field name="code">pedido.compra.number</field>
+		</record>
+		<record id="seq_pedido_compra_number" model="ir.sequence">
+			<field name="name">Pedido de compras</field>
+			<field name="code">pedido.compra.number</field>
+			<field name="prefix">%(year)s-06-PC-</field>
+			<field name="padding">4</field>
+		</record>
+	</data>
+</openerp>

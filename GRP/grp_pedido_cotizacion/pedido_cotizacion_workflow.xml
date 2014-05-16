@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+<data>
+    <record model="workflow" id="wkf_pedido_cotizacion">
+        <field name="name">cotizaciones</field>
+        <field name="osv">cotizaciones</field>
+        <field name="on_create">True</field>
+    </record>
+<!-- ************************** activity *****************-->
+
+    <record model="workflow.activity" id="act_nuevo" >
+        <field name="wkf_id" ref="wkf_pedido_cotizacion"/>
+        <field name="name">actividad_nuevo</field>
+        <field name="flow_start">True</field>
+    </record>
+    <record model="workflow.activity" id="act_Pendiente_de_recomendar" >
+        <field name="wkf_id" ref="wkf_pedido_cotizacion"/>
+        <field name="name">actividad.pendRec</field>
+        <field name="kind">function</field>
+        <field name="action">action_Pendiente_de_recomendar()</field>
+    </record>
+	<record model="workflow.activity" id="act_Recomendada" >
+        <field name="wkf_id" ref="wkf_pedido_cotizacion"/>
+        <field name="name">actividad.Recomendada</field>
+        <field name="kind">function</field>
+        <field name="action">action_Recomendada()</field>
+    </record>
+    <record model="workflow.activity" id="act_Cerrada" >
+        <field name="wkf_id" ref="wkf_pedido_cotizacion"/>
+        <field name="name">actividad.cerrada</field>
+        <field name="kind">function</field>
+        <field name="action">action_Cerrada()</field>
+    </record>
+    <record model="workflow.activity" id="act_Adjudicada" >
+        <field name="wkf_id" ref="wkf_pedido_cotizacion"/>
+        <field name="name">actividad.Adjudicada</field>
+        <field name="kind">function</field>
+        <field name="action">action_Adjudicada()</field>
+    </record>    
+
+<!-- ************************** transition *****************-->
+	<record model="workflow.transition" id="trans_SR_1">
+		<field name="act_from" ref="act_nuevo"/>
+		<field name="act_to" ref="act_Pendiente_de_recomendar"/>
+		<field name="signal">button_Enviar_a_recomendar</field>
+		<field name="condition">True</field>
+	</record>
+	<record model="workflow.transition" id="trans_SR_2">
+		<field name="act_from" ref="act_Pendiente_de_recomendar"/>
+		<field name="act_to" ref="act_Cerrada"/>
+		<field name="signal">button_Cerrada</field>
+		<field name="condition">True</field>
+	</record>
+	<record model="workflow.transition" id="trans_SR_3">
+		<field name="act_from" ref="act_Pendiente_de_recomendar"/>
+		<field name="act_to" ref="act_Recomendada"/>
+		<field name="signal">button_Recomendada</field>
+		<field name="condition">True</field>
+	</record>
+	<record model="workflow.transition" id="trans_SR_4">
+		<field name="act_from" ref="act_Recomendada"/>
+		<field name="act_to" ref="act_Adjudicada"/>
+		<field name="signal">button_Adjudicada</field>
+		<field name="condition">True</field>
+	</record>
+</data>
+</openerp>

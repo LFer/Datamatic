@@ -1,0 +1,3 @@
+[[ setTag('para','image',{'width':'100.0','height':'33.3'}) ]][[ o.write_uid.company_id.logo_web ]]
+[[ o.write_uid.company_id.logo_web and setTag('para','image',{'x':'10.0','y':'50.0','width':'94.0','height':'103.0'}) ]] [[o.write_uid.company_id.logo_web]]
+

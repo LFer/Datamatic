@@ -1,0 +1,15 @@
+{
+	"name" : "GRP - Almacen",
+	"version" : "1.0",
+	"author" : "Datamatic",
+	"website" : "www.datamatic.com.uy",
+	"category" : "MRREE",
+	"description": "MRREE",
+	'depends' : ["account", "stock", "grp_solicitud_de_recursos", "purchase_requisition",],
+	"init_xml" : [],
+	"demo_xml" : [],
+	"update_xml" : ['almacen_view.xml',],
+    'data': ['security/grp_almacen_security.xml',],
+	"installable": True,
+	"active": False,
+}

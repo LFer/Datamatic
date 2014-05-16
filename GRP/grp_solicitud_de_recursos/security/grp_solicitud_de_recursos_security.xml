@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data noupdate="0">
+
+<record id="grp_group_wf_comp_aprobador" model="res.groups">
+	<field name="name">Aprobador SR</field>
+</record>
+
+<record id="grp_group_wf_comp_solicitante" model="res.groups"> <!-- cambiar los nombres de los grupos segun SR-->
+	<field name="name">Solicitante SR</field>
+</record>
+
+</data>
+</openerp>

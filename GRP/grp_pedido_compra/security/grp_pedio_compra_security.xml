@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+        <record id="grp_group_wf_pc" model="res.groups">
+            <field name="name">Aprobador PC</field>
+        </record>
+        <record id="grp_group_wf_pc" model="res.groups">
+            <field name="name">Solicitante PC</field>
+        </record>
+    </data>
+</openerp>

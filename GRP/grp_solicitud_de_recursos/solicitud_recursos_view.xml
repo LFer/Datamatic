@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+<data>
+
+<!-- Vistas -->
+	<record id="view_solicitud_recursos_tree" model="ir.ui.view">
+		<field name="name">solicitud.recursos.tree</field>
+		<field name="model">solicitud.recursos</field>
+		<field name="priority" eval="1"/>
+		<field name="type">tree</field>
+		<field name="arch" type="xml">
+			<tree string="Solicitud">
+				<field name="name" />
+				<field name="company_id" />
+				<field name="user_id" />
+				<field name="state" />
+				<field name="date_start" />
+			</tree>
+		</field>
+	</record>
+
+	<record id="view_solicitud_recursos_form" model="ir.ui.view">
+		<field name="name">solicitud.recursos.form</field>
+		<field name="model">solicitud.recursos</field>
+		<field eval="1" name="priority"/>
+		<field name="arch" type="xml">
+			<form string="Datos" version="7.0" >
+				<header>
+					<button name="button_Solicitar_Aprobacion" type="workflow" states="draft" string="Enviar solicitud" groups="base.group_user" />
+					<button name="button_aprobado" type="workflow" states="sent_to_approval" string="Aprobar" groups="base.group_user"/>
+					<button name="button_Cancelar" type="workflow" states="sent_to_approval" string="Rechazar" groups="base.group_user"/>
+					<button name="button_cumple_stock" type="workflow" states="approved" string="Cumple total" groups="base.group_user"/>
+					<button name="button_no_hay_stock" type="workflow" states="approved" string="Cumple parcial" groups="base.group_user"/>
+					<button name="action_estado_abierto" type="object" states="abierto,cerrado,pausado" string="Abierto" confirm="¿Confirma marcar como abierto?" class="oe_highlight"/>
+					<button name="action_Para_Compras" type="object" states="closed_partial" string="A comprar" class="oe_highlight" groups="grp_almacen.grp_group_wf_aprsc,grp_almacen.grp_group_wf_solsc"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,sent_to_approval,approved,rejected,closed_total,closed_partial,purchase_request" statusbar_colors='{"closed_total":"blue"}'/> 
+				</header>
+					
+                <sheet string="Solicitud">
+                    <group id="numero_solicitud">
+                        <div>
+                            <label for="name" class="oe_inline"/>
+                            <h1>
+                                <field name="name"  readonly="1"/>
+                            </h1>
+                        </div>
+                    </group>
+                        <group>      
+                            <group>
+                                <field name="description" />
+							    <field name="company_id"/>
+							    <field name="user_id" />
+						    </group>
+						<group>
+							<field name="date_start" />
+							<field name="warehouse" />
+					</group>
+					</group>
+					<group colspan="6">
+					<group>
+						<field name="inciso" readonly="1"/>
+					</group>
+					<group>
+						<field name="u_e" readonly="1" />
+					</group>
+					</group>
+					<notebook>
+						<page string="Solicitado">
+							<field name='srl_ids_solicitado' nolabel="1" widget='one2many_list' context="" > 
+								<tree string="Solicitado" editable="bottom">
+									<field name="product_id" on_change="onchange_product_id(product_id,product_uom_id)"/>
+									<field name="product_uom_id" />
+									<field name="precio" />
+									<field name="product_requested_qty" />
+									<field name="product_date_need" />
+									<field name="comentarios" />
+									<field name="estado" />
+									<field name="num_entrega" />
+									<field name="cant_engregada" />
+									<field name="O/C" />															
+								</tree>
+							</field> 
+						</page>
+					</notebook>
+				</sheet>
+				<div class="oe_chatter">
+                 <field name="message_follower_ids" widget="mail_followers" />
+                 <field name="message_ids" widget="mail_thread"/>
+             </div>
+			</form>
+		</field>
+	</record>
+
+
+<!-- Acciones -->
+	<record id="action_solicitud_recursos" model="ir.actions.act_window">
+		<field name="name">Solicitud de Recursos</field>
+		<field name="type">ir.actions.act_window</field>
+		<field name="res_model">solicitud.recursos</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+<!-- menu -->
+    <menuitem id="menu_sr" name="Solicitud de recursos" parent="menu_ce" sequence="1"/>
+	<menuitem id="menu_sr_1" parent="menu_sr" name="Proceso solicitud de Recursos" action="action_solicitud_recursos" groups="base.group_no_one"/>
+</data>
+</openerp>

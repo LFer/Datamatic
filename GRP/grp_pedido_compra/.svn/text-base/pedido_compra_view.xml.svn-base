@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+<data>
+    <record id="view_pedidos_compra_form" model="ir.ui.view">
+        <field name="name">new.form</field>
+        <field name="model">pedidos.compra</field>
+        <field eval="1" name="priority"/>
+        <field name="arch" type="xml">
+            <form string="Datos" version="7.0" >
+                <header>
+					<button name="button_Solicitar_aprobacion"  type="workflow" states="draft"                      string="Solicitar aprobacion"   groups="base.group_user"/>
+					<button name="button_Aprobar"               type="workflow" states="sent_to_approval"           string="Aprobar"                groups="base.group_user"/>
+                    <button name="button_Rechazar" 				type="workflow" states="sent_to_approval"           string="Rechazar"               groups="base.group_user"/>
+                    <button name="button_Afectar" 				type="workflow" states="approved"                   string="Afectado"               groups="base.group_user"/>
+					<!--<button name="button_cancelar"              type="workflow" states="sent_to_approval"           string="Cancelar"               groups="base.group_user"/> -->
+                    <button name="button_Invitar_a_proveedores" type="workflow" states="affected"                   string="Invitar proveedores"    groups="base.group_user"/>
+                    <button name="button_Recepción_de_ofertas" 	type="workflow" states="proveedores_invitados"      string="Recepcionar ofertas"    groups="base.group_user"/>
+					<field name="state" widget="statusbar" statusbar_visible="draft,sent_to_approval,approved,affected,rejected,proveedores_invitados" statusbar_colors='{"sent_to_approval":"blue","proveedores_invitados":"red"}' readonly="1"/>
+                </header>
+                <sheet>
+                    <group>
+                        <!-- 
+                        <div  colspan="4" align="right">
+                            <button name="button_importar_sc"  type="object" string="Importar sol. compras"/> 
+                        </div>-->
+                        <div>
+                            <label for="nro_ped_compra" class="oe_inline"/>
+                            <h1>
+                                <field name="nro_ped_compra" class="oe_inline" attrs="{'readonly': True}"/>
+                             <!-- <label string="," attrs="{'invisible':[('origin','=',False)]}"/>  -->
+                            </h1>
+                        </div>
+                    </group>
+                    
+                    <group>
+                        <div>
+                            <label for="description" class="oe_inline"/>
+                            <h1>
+                                <field name="description"  placeholder="Compra de muebles para oficina"/> 
+                            </h1>
+                        </div>
+                    </group>
+                    <group cols="4" colspan="2">
+                        <group cols="2">
+                            <field name="company_id"  readonly="1" class="oe_inline"/> 
+                            <field name="inciso"      class="oe_inline" attrs="{'readonly': True}" /> 
+                            <field name="u_e"         class="oe_inline" attrs="{'readonly': True}" /> 
+                        </group>
+                        <group >
+                            <field name="date_start" class="oe_inline" />
+                            <field name="date_end"    class="oe_inline"/> 
+                            <field name="tipo_compra" class="oe_inline"/> 
+                            <field name="sub_tipo_compra" class="oe_inline"/> 
+                        </group>        
+                    </group>        
+                    <group>
+                        <field name="por_sc" class="oe_inline"/>                            
+                    </group>
+                    <notebook>
+                        <page string="Lista de artículos" attrs="{'invisible': [('por_sc','=', True)]}">
+                            <field name="line_ids">
+                                <tree string="Productos" editable="bottom">
+                                    <field name="product_id" on_change="onchange_product_id(product_id,product_uom_id)"/>
+                                    <field name="product_qty"/>
+                                    <field name="product_uom_id" />
+                                    <field name="odg" attrs="{'readonly':True}"/>
+                                    <field name="iva" attrs="{'readonly':True}"/>
+                                    <field name="nota"/>
+                                </tree>
+                                <form string="Products" version="7.0">
+                                    <group>
+                                        <field name="product_id" />
+                                        <field name="product_qty"/>
+                                        <field name="product_uom_id" />
+                                        <field name="odg" attrs="{'readonly':True}"/>
+                                        <field name="iva" attrs="{'readonly':True}"/>
+                                        <field name="nota"/>
+                                        
+                                    </group>
+                                </form>
+                            </field>  
+                        </page>
+                       <page string="Solicitudes de compra" attrs="{'invisible': [('por_sc','=', False)]}">
+                            <field name="line_sc">
+                                <tree string="Solicitudes de compra" editable="bottom" >
+                                    <!--delete="0" create="0" editable="bottom">  -->  
+                                    <field name="id" invisible="1"/>
+                                    <field name="requisition_id"  attrs="{'readonly':True}"/>
+                                    <field name="product_id"  attrs="{'readonly':True}"/>
+                                    <field name="product_qty" attrs="{'readonly':True}"/>
+                                    <field name="product_uom_id" attrs="{'readonly':True}" />
+                                    <field name="odg" attrs="{'readonly':True}"/>
+                                    <field name="iva" attrs="{'readonly':True}"/>
+                                    <field name="product_qty_2_buy_sc" on_change="onchange_product_qty_2_buy_sc(product_id,product_qty_2_buy_sc)"/>
+                                    <field name="nota"/>
+                                    <field name="seleccionado" class="oe_inline" on_change="onchange_seleccionado(id,product_id,product_qty,seleccionado)"/>  
+                                </tree>
+                            </field>  
+                        </page>
+                    </notebook>		
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Vista Tree Inicio-->    	
+    <record id="view_pedido_compras_tree" model="ir.ui.view">
+        <field name="name">new.tree</field>
+        <field name="model">pedidos.compra</field>
+        <field eval="1" name="priority"/>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="datos" colors="green:por_sc==True">
+                <field name="por_sc"  invisible="1"/>
+                <field name="nro_ped_compra" />
+                <field name="description" />
+                <field name="date_start" />
+                <field name="date_end" />
+                <field name="state" />
+                <field name="user_id" />
+                <field name="usr_solicitado" />
+                <field name="usr_aprobado" />
+            </tree>
+        </field>
+    </record>	
+    
+    <!-- Vista Busqueda -->
+    <record id="view_pedido_compras_filter" model="ir.ui.view">
+        <field name="name">new.select</field>
+        <field name="model">pedidos.compra</field>
+        <field name="arch" type="xml">
+            <search string="Search Datos">
+                <field name="name" filter_domain="[('name','ilike',self)]"/>
+            </search>
+        </field>
+    </record>
+  	<!-- ***************************************************************************** -->
+    <!-- Vista Formulario 1 -->
+	<!-- ****************** -->
+    <record id="action_pedidos_compra_form" model="ir.actions.act_window">
+        <field name="name">Pedido de compra</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">pedidos.compra</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <!--<field name="search_view_id" ref="view_pedido_compras_filter"/>
+        <field name="filter" eval="True"/> -->
+    </record>
+    
+<!-- ************************************* -->
+<menuitem id="menu_pdc" name="Pedidos de compras" parent="grp_menu_pdc"/>
+<menuitem id="menu_pdc_1" parent="menu_pdc" name="Armado pedido de compra" action="action_pedidos_compra_form"  sequence="3"/>
+</data>
+</openerp>
+
+ <!--
+          'product_qty_2_buy_sc': fields.float('A Comprar', digits_compute=dp.get_precision('Product Unit of Measure')),       
+        'seleccionado': fields.boolean('Seleccionado'),
+        #'product_id': fields.many2one('product.product', 'Product' ),
+        #'product_uom_id': fields.many2one('product.uom', 'Product Unit of Measure'),
+        #'product_qty': fields.float('Quantity', digits_compute=dp.get_precision('Product Unit of Measure')),
+        #'requisition_id' : fields.many2one('purchase.requisition','Purchase Requisition', ondelete='cascade'),
+        #'company_id': fields.related('requisition_id','company_id',type='many2one',relation='res.company',string='Company', store=True, readonly=True),
+
+
+               <field name="inherit_id" ref="base.res_config_view_base"/>
+
+  -->
+  
+  
+  
+

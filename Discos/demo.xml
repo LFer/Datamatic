@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model='discs'>
+            <field name='name'>Gilda</field>
+            <field name='year'>1998-02-05</field>
+            <field name='format'>vinyl</field>
+            <field name='active'>True</field>
+            <field name='description'>Discazo de Gilda</field>
+        </record>
+    </data>
+</openerp>

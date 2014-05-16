@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+<data>
+
+
+    <!--Acciones -->
+	<record id="action_almacen_prueba_form" model="ir.actions.act_window">
+		<field name="name">almacen</field>
+		<field name="res_model">solicitud.recursos</field>
+		<field name="view_type">form</field>
+		<field name="view_mode">tree,form</field>
+	</record>
+
+
+    <!--Vista tree -->
+
+	<!--Vista form -->
+
+	<record id="inherited_view_solicitud_recursos_form" model="ir.ui.view">
+        <field name="name">solicitud.recursos.form.inherit</field>
+        <field name="model">solicitud.recursos</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="grp_solicitud_de_recursos.view_solicitud_recursos_form"/>
+        <field name="arch" type="xml">
+			<xpath expr="//group[@id='numero_solicitud']" position="before">
+				<div class="oe_right oe_button_box">
+					<button name="action_view_stock_location_product" string="Cumplir con Stock" states="approved" type="action" groups="grp_almacen.grp_group_wf_aprsc,grp_almacen.grp_group_wf_solsc"/>
+					<button name="action_view_solicitud_compra" string="Solicitar Compra" states="approved" type="object" groups="grp_almacen.grp_group_wf_aprsc,grp_almacen.grp_group_wf_solsc"/>
+				</div>     
+	     		
+			</xpath>
+        </field>
+    </record>
+
+	<record id="inherited_view_purchase_requisition_form" model="ir.ui.view">
+        <field name="name">purchase.requisition.form.inherit</field>
+        <field name="model">purchase.requisition</field>
+        <field name="type">form</field>
+        <field name="inherit_id" ref="purchase_requisition.view_purchase_requisition_form"/>
+        <field name="arch" type="xml">
+			<xpath expr="//tree[@string='Products']/field[@name='product_id']" position="after">
+				<field name="cantidad_solicitada" attrs="{'readonly':True}" groups="grp_almacen.grp_group_wf_aprsc,grp_almacen.grp_group_wf_solsc"/>
+				<field name="cumplida_con_stock" attrs="{'readonly':True}" groups="grp_almacen.grp_group_wf_aprsc,grp_almacen.grp_group_wf_solsc"/>
+			</xpath>
+        </field>
+    </record>
+
+
+        
+    <!-- MENUS -->
+	<!--menuitem id="menu_al" name="Almacen Prueba" sequence="4"/-->
+	<menuitem id="menu_al" name="Solicitudes de recurso" parent="stock.menu_stock_root" sequence="1"/>
+	<menuitem id="menu_al_1" parent="menu_al" name="Solicitudes de recurso" action="action_almacen_prueba_form" groups="base.group_no_one"/>
+
+
+
+
+
+</data>
+</openerp>

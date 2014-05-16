@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+<data>
+    <menuitem id="grp_menu_pdc" name="GRP-Compras Estatales" sequence="5"/>
+</data>
+</openerp>

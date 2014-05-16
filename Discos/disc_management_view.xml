@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+	
+		<!-- menu -->
+	
+		<menuitem id="disc_management_menu" name="Discs" />
+		
+		<!-- vista tree -->
+		
+	    <record id="disc_tree_view" model="ir.ui.view">
+	        <field name="name">discs.tree.view</field>
+	        <field name="model">discs</field>
+	        <field name="type">tree</field>
+	        <field name="arch" type="xml">
+	            <tree string="Discs">
+	                <field name="name"/>
+	                <field name="year"/>
+	           </tree>
+	        </field>
+	    </record>
+			
+		<!-- vista form -->	
+	
+	    <record id="disc_form_view" model="ir.ui.view">
+	        <field name="name">discs.form.view</field>
+	        <field name="model">discs</field>
+	        <field name="type">form</field>
+	        <field name="arch" type="xml">
+	            <form string="Discs" version="7.0">
+
+					<!-- EJEMPLO GROUP X 4 
+					<group colspan="4">
+						<field name="name"/>
+						<field name="year"/>
+						<field name="format"/>
+						<field name="active"/>
+						<field name="description" nolabel="1" />
+					</group>-->
+
+					<!-- EJEMPLO GROUP X 2 
+					<group colspan="2">
+						<field name="name"/>
+						<field name="year"/>
+					</group>
+					<group colspan="2">
+						<field name="format"/>
+						<field name="active"/>
+					</group>
+
+					<separator string="Disc Description" />
+					<group colspan="2">
+						<field name="description" nolabel="1" />
+					</group>-->
+					
+
+					<!-- EJEMPLO NOTEBOOK -->
+					<notebook>
+						<page string="Disc Description">					
+							<group colspan="2">
+								<field name="name"/>
+								<field name="year"/>
+							</group>
+						</page>
+						<page string="Format" >
+							<group colspan="2">
+								<field name="format"/>
+                                <field name="active"/>
+                                <field name="description"/>
+							</group>
+						</page>
+						<!--page string="Disc Description" >
+							<group colspan="2">
+								<field name="description"/>
+							</group>
+						</page-->
+
+					</notebook>
+					
+
+					<!-- EJEMPLO SHEET 
+					<sheet string="Discs">
+						<notebook>
+							<page string="Disc Description">					
+								<group colspan="2">
+									<field name="name"/>
+									<field name="year"/>
+								</group>
+							</page>
+							<page string="Format" >
+								<group colspan="2">
+									<field name="format"/>
+									<field name="active"/>
+								</group>
+							</page>
+							<page string="Disc Description" >
+								<group colspan="2">
+									<field name="description"/>
+								</group>
+							</page>
+							
+						</notebook>
+					</sheet>-->
+
+					<!-- EJEMPLO HEADER 
+					<header>
+						<button name="boton" string="Botón" type="object" />
+					</header>
+					
+					<sheet string="Discs">
+						<notebook>
+							<page string="Disc Description">					
+								<group colspan="2">
+									<field name="name"/>
+									<field name="year"/>
+								</group>
+							</page>
+							<page string="Format" >
+								<group colspan="2">
+									<field name="format"/>
+									<field name="active"/>
+								</group>
+							</page>
+							
+							<page string="Disc Description" >
+								<group colspan="2">
+									<field name="description"/>
+								</group>
+							</page>
+
+						</notebook>
+					</sheet>-->
+                
+	           </form>
+	        </field>
+	    </record>
+		
+		<!-- accion para la ventana de vistas -->
+		
+		
+	    <record id="action_disc_management_discs" model="ir.actions.act_window" >
+	        <field name="name">Discs</field>
+	        <field name="res_model">discs</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>
+	
+
+		<!-- Sub menu-->
+		
+	    <menuitem name="Management" id="discs_group_view" parent="disc_management_menu" />
+		<menuitem name="Discs" id="discs_menu_view" parent="discs_group_view" action="action_disc_management_discs"/>
+
+	
+	</data>
+</openerp>
